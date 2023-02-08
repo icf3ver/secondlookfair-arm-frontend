@@ -1,0 +1,148 @@
+.btn_txt {
+    color: #FFFFFF;
+    font-size: 1.625rem;
+}
+
+.container {
+    flex: 1;
+    background-color: #1c1c1c;
+    align-items: center;
+    justify-content: center;
+}
+
+.header_container {
+    height: 30%;
+    width: 100%;
+
+    align-items: center;
+    justify-content: center;
+}
+
+.image {
+    margin-bottom: 5%;
+}
+
+.title {
+    color: #FFFFFF;;
+    text-shadow: 2px 2px 0px #452a00;
+    //font-family: Source Sans Pro,sans-serif;
+    font-weight: 700;
+    font-size: 2.625rem;
+}
+
+.subscript {
+    color: #FFFFFF;;
+    text-shadow: 2px 2px 0px #452a00;
+    //font-family: Source Sans Pro,sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+
+    margin-bottom: 5%;
+}
+
+// Contains everything except the title
+.content_container {
+    width: 80%;
+    height: 50%;
+
+    align-items: center;
+    justify-content: center;
+}
+
+.home_container {
+    width: 100%;
+    height: 100%;
+
+    align-items: center;
+    justify-content: center;
+}
+
+.home_btn{
+    width: 100%;
+    height: 10%;
+    margin-bottom: 5%;
+    background-color: #4A4A4A;
+    border-radius: 10px;
+
+    align-items: center;
+    justify-content: center;
+}
+
+.input_container1 {
+    height: 100%;
+    width: 100%;
+
+    margin-top: 20%;
+
+    align-items: center;
+}
+
+.input_line_container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    height: 10%; // 50% / 5%
+    width: 100%;
+    margin-bottom: 10;
+}
+
+.text_input_container {
+    height: 100%;
+    width: 77.5%;
+    background-color: #4A4A4A;
+    border-radius: 10px;
+}
+
+.text_input {
+    height: 100%;
+    width: 94%;
+    background-color: #00000000;
+    border-radius: 10px;
+    margin-left: 3%;
+
+    margin-bottom: 20%;
+
+    font-size: 1.625rem;
+    color: #FFFFFF;
+}
+
+.submit_btn_txt {
+    height: 100%;
+    width: 20%;
+    background-color: #4A4A4A;
+    border-radius: 10px;
+
+    align-items: center;
+    justify-content: center;
+}
+
+.input_container2 {
+    flex: 1;
+    background-color: #1c1c1c;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 60%;
+}
+
+.canvas {
+    width: 100%;
+    margin-bottom: 10;
+
+    max-height: 83%; // 50% / 60%
+
+    background-color: #4A4A4A;
+    border-radius: 10px;
+}
+
+.submit_btn_canvas {
+    width: 100%;
+    height: 10%;
+
+    background-color: #4A4A4A;
+    border-radius: 10px;
+
+    align-items: center;
+    justify-content: center;
+}

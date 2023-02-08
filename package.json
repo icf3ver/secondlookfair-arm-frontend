@@ -1,0 +1,40 @@
+{
+  "name": "secondlookfair-arm",
+  "version": "0.1.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "web": "expo start --web"
+  },
+  "dependencies": {
+    "@types/react": "~18.0.0",
+    "@types/react-native": "~0.69.1",
+    "babel-plugin-react-native-classname-to-style": "^1.2.2",
+    "babel-plugin-react-native-platform-specific-extensions": "^1.1.1",
+    "expo": "~46.0.16",
+    "expo-draw": "github:MarangoniEduardo/expo-draw",
+    "expo-status-bar": "~1.4.0",
+    "react": "^18.0.0",
+    "react-native": "^0.69.6",
+    "react-native-paper": "^4.12.5",
+    "react-native-sass-transformer": "^2.0.0",
+    "react-native-svg": "12.3.0",
+    "react-native-svg-transformer": "^1.0.0",
+    "react-native-tcp-socket": "^6.0.5",
+    "react-native-udp": "^3.0.0",
+    "sass": "^1.55.0",
+    "socket.io-client": "^4.5.4",
+    "typescript": "^4.6.3"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.12.9"
+  },
+  "react-native": {
+    "net": "react-native-tcp-socket",
+    "tls": "react-native-tcp-socket",
+    "fs": "react-native-tcp-socket"
+  },
+  "private": true
+}
