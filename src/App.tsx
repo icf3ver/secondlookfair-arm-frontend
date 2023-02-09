@@ -3,7 +3,7 @@ import { StatusBar } from 'expo-status-bar';
 import React, {useEffect, useState, useRef} from 'react';
 import { StyleSheet, Text, View, Button, TouchableOpacity, TextInput } from 'react-native';
 import ExpoDraw from 'expo-draw';
-import io from 'socket.io-client';
+import { io } from "socket.io-client";
 
 import Logo from '../assets/logo.svg';
 import Appstyles from './App.module.scss';
@@ -17,22 +17,43 @@ const MAX_CHAR_COUNT = 10;
 // Max packet length TODO
 const MAX_PACKET_LEN = 50000;
 
-const REMOTE_PORT = 5000;
+const REMOTE_PORT = 3000;
 
-const REMOTE_HOST = '127.0.0.1';
+const REMOTE_HOST = '172.20.10.9';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
 
 // const REMOTE_HOST = '127.0.0.1'; // Should set up cheap clean tmp DNS
-const REMOTE_URL = "http://" + REMOTE_HOST + ':' + REMOTE_PORT;
+const REMOTE_URL = "ws://" + REMOTE_HOST + ':' + REMOTE_PORT;
+
+
+const socket = io(REMOTE_URL, {
+  transports: ['websocket'],
+  reconnectionAttempts: 15
+});
 
 export default function App() {
-  const socket = io(REMOTE_URL, {
-    transports: ['websocket'],
-    reconnectionAttempts: 15
-  });
+
+  const [isConnected, setIsConnected] = useState(socket.connected);
+
+  useEffect(() => {
+    socket.on('connect', () => {
+      setIsConnected(true);
+      socket.emit('ping');
+    });
+
+    socket.on('disconnect', () => {
+      setIsConnected(false);
+    });
+
+    return () => {
+      socket.off('connect');
+      socket.off('disconnect');
+    };
+  }, []);
+
 
   const canvasRef = useRef(null);
   var _undo;
@@ -59,12 +80,13 @@ export default function App() {
       });
     });
 
-    console.log(msg);
+    // console.log(msg);
 
     if (msg.length > MAX_PACKET_LEN) {
       alert("Instruction set too large!");
     } else {
-      socket.emit(msg);
+      console.log(isConnected);
+      socket.emit('my_message', msg);
     }
   };
 
