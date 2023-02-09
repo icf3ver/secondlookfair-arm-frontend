@@ -22,7 +22,6 @@
     "react-native-sass-transformer": "^2.0.0",
     "react-native-svg": "12.3.0",
     "react-native-svg-transformer": "^1.0.0",
-    "react-native-tcp-socket": "^6.0.5",
     "react-native-udp": "^3.0.0",
     "sass": "^1.55.0",
     "socket.io-client": "^4.5.4",
@@ -30,11 +29,6 @@
   },
   "devDependencies": {
     "@babel/core": "^7.12.9"
-  },
-  "react-native": {
-    "net": "react-native-tcp-socket",
-    "tls": "react-native-tcp-socket",
-    "fs": "react-native-tcp-socket"
   },
   "private": true
 }

@@ -9,6 +9,8 @@ import Logo from '../assets/logo.svg';
 import Appstyles from './App.module.scss';
 import LETTERS from './Letters';
 
+import {Dimensions} from 'react-native';
+
 // So text does not run too far off the page
 const MAX_CHAR_COUNT = 10;
 
@@ -18,6 +20,9 @@ const MAX_PACKET_LEN = 50000;
 const REMOTE_PORT = 5000;
 
 const REMOTE_HOST = '127.0.0.1';
+
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
 
 
 // const REMOTE_HOST = '127.0.0.1'; // Should set up cheap clean tmp DNS
@@ -29,21 +34,28 @@ export default function App() {
     reconnectionAttempts: 15
   });
 
+  const canvasRef = useRef(null);
   var _undo;
   var _clear;
 
   const [inputTy, setInputTy] = useState(0);
 
   const [text, setText] = useState("");
-  const [strokes, setStrokes] = useState([]);
+  const [_strokes, setStrokes] = useState([]);
   
   const __transmitStrokes = async(strokes) => {
     var msg = "";
 
+    // Transform stroke to percentage (Note inverse must be done for letters)
+    var elemWidth = windowWidth * 0.8; // 80% of width
+    var elemHeight = windowHeight * 0.83 * 0.5;
+
     strokes.forEach(stroke => { // Ignore timestamps (Speed does not matter just get there!)
       msg += "start,";
       stroke.forEach(pos => {
-        msg += "(" + pos.x + "," + pos.y + "),";
+        msg += "(" + 
+          ((pos.x > elemWidth) ? elemWidth : ((pos.x < 0) ? 0 : pos.x))/elemWidth + "," + 
+          ((pos.y > elemHeight) ? elemHeight : ((pos.y < 0) ? 0 : pos.y))/elemHeight + "),";
       });
     });
 
@@ -57,16 +69,23 @@ export default function App() {
   };
 
   const __handleSubmitText = async(_event) => {
-    var msg = '';
+    var strokes = [];
+    var valid = true;
 
     text.split("").forEach((letter) => {
-      msg += LETTERS[' '.charCodeAt(0) - letter.charCodeAt(0)];
+      var idx = 'A'.charCodeAt(0) - letter.charCodeAt(0);
+      if (idx > 25) {
+        valid = false;
+      } else {
+        strokes = strokes.concat(transformLetters(LETTERS[idx]));
+      }
     });
-
-    if (msg.length > MAX_PACKET_LEN) {
-      alert("Instruction set too large!");
+    
+    if (!valid) {
+      alert("Only input uppercase letters!");
     } else {
-      socket.emit(msg);
+      // __transmitStrokes(strokes);
+      alert("Unimplemented");
     }
 
     setText("");
@@ -74,8 +93,7 @@ export default function App() {
   };
 
   const __handleSubmitCanvas = async(_event) => {
-
-    __transmitStrokes(strokes);
+    __transmitStrokes(_strokes);
 
     //_clear(); // No need it gets rerendered with no strokes
     setInputTy(0);
@@ -92,7 +110,7 @@ export default function App() {
       <View style={Appstyles.content_container}>
         { inputTy == 0 &&
           <View style={Appstyles.home_container}>
-          <TouchableOpacity style={Appstyles.home_btn} onPress={(event) => setInputTy(1)}><Text style={Appstyles.btn_txt}>Text</Text></TouchableOpacity>
+          {/* <TouchableOpacity style={Appstyles.home_btn} onPress={(event) => setInputTy(1)}><Text style={Appstyles.btn_txt}>Text</Text></TouchableOpacity> */}
           <TouchableOpacity style={Appstyles.home_btn} onPress={(event) => setInputTy(2)}><Text style={Appstyles.btn_txt}>Draw</Text></TouchableOpacity>   
           </View>
         }
@@ -109,7 +127,8 @@ export default function App() {
         { inputTy == 2 &&
           <View style={Appstyles.input_container2}>
             <ExpoDraw
-              strokes={[]}
+              ref = {canvasRef}
+              strokes={LETTERS[1]}
               containerStyle={Appstyles.canvas}
               rewind={(undo) => {_undo = undo}}
               clear={(clear) => {_clear = clear}}
@@ -126,4 +145,13 @@ export default function App() {
       <StatusBar style="auto"/>
     </View>
   );
+}
+
+
+const SCALING = 10;
+
+const SPACING = 10; // units
+
+function transformLetters(strokes: any): any {
+  return [];
 }
